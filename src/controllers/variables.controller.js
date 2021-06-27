@@ -1,3 +1,4 @@
+const Measurement = require('../models/Measurement');
 const Variable = require('../models/Variable');
 const ctrl = {};
 
@@ -39,7 +40,11 @@ ctrl.updateVariableById = async (req, res) => {
 
 ctrl.deleteVariableById = async (req, res) => {
   try {
-    await Variable.findByIdAndDelete(req.params.variableId);
+    const variable = await Variable.findById(req.params.variableId);
+    if (!variable) return res.status(404).json({ message: `variable with id=${req.params.variableId} does not exit` });
+    const measurements = await Measurement.countDocuments({ variableId: variable._id });
+    if (measurements > 0 ) return res.status(404).json({ message: `variable with id=${variable._id} cannot be deleted because it has related measurements` });
+    await Variable.deleteOne({ _id: variable._id });
     res.status(204).json();
   } catch (error) {
     res.status(404).json({

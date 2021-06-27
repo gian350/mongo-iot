@@ -9,4 +9,6 @@ router.get('/:districtId', districtsController.getDistrictById);
 router.put('/:districtId', districtsController.updateDistrictById);
 router.delete('/:districtId', districtsController.deleteDistrictById);
 
+router.get('/sensors/:districtId', districtsController.getSensorsByDistrict);
+
 module.exports = router;

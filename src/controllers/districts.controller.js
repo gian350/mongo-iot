@@ -1,4 +1,6 @@
 const District = require('../models/District');
+const Sensor = require('../models/Sensor');
+const User = require('../models/User');
 const ctrl = {};
 
 ctrl.createDistrict = async (req, res) => {
@@ -39,13 +41,26 @@ ctrl.updateDistrictById = async (req, res) => {
 
 ctrl.deleteDistrictById = async (req, res) => {
   try {
-    await District.findByIdAndDelete(req.params.districtId);
+    // Validaciones
+    const district = await District.findById(req.params.districtId);
+    if (!district) return res.status(404).json({ message: `district with id=${req.params.districtId} does not exit` });
+    const users = await User.countDocuments({ districtId: district._id });
+    if (users > 0 ) return res.status(404).json({ message: `district with id=${district._id} cannot be deleted because it has related users` });
+    const sensors = await Sensor.countDocuments({ districtId: district._id });
+    if (sensors > 0 ) return res.status(404).json({ message: `district with id=${district._id} cannot be deleted because it has related sensors` });
+    
+    await District.deleteOne({ _id: district._id });
     res.status(204).json();
   } catch (error) {
     res.status(404).json({
       message: error.name
     });
   }
+}
+
+ctrl.getSensorsByDistrict = async (req, res) => {
+  const sensors = await Sensor.find({ districtId: req.params.districtId });
+  res.status(200).json(sensors);
 }
 
 module.exports = ctrl;

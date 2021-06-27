@@ -6,7 +6,7 @@ const sensorSchema = new Schema({
   location: String,
   coordX: Number,
   coordY: Number,
-  districtId: { ref: 'District', type: String }
+  districtId: { ref: 'District', type: String, required: true }
 }, {
   timestamps: false,
   versionKey: false

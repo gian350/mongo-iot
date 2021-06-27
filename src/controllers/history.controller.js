@@ -6,10 +6,18 @@ const ctrl = {};
 
 ctrl.createhistory = async (req, res) => {
   try {
-    const { variableId, sensorId, value } = req.body;
-    const newHistory = new History({ variableId, sensorId, value });
+    // Validaciones
+    const sensor = await Sensor.findById(req.body.sensorId);
+    if (!sensor) return res.status(404).json({ message: `sensorId with id=${req.body.sensorId} does not exit` });
+    const variable = await Variable.findById(req.body.variableId);
+    if (!variable) return res.status(404).json({ message: `variableId wit id=${req.body.variableId} does not exit` });
+
+    const { value, sensorId, variableId } = req.body;
+    const newHistory = new History({ value, sensorId, variableId });
     const historyCreated = await newHistory.save();
-    const measurement = await Measurement.findOne({ variableId, sensorId });
+    
+    // Crear el registro en la tabla Measurement, caso contrario actualizar el campo value
+    const measurement = await Measurement.findOne({ sensorId, variableId });
     if (!measurement) {
       const newMeasurement = new Measurement({ value, sensorId, variableId });
       await newMeasurement.save();

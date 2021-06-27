@@ -7,7 +7,7 @@ const userSchema = new Schema({
   surname: String,
   password: String,
   email: { type: String, unique: true },
-  districtId: { ref: 'District', type: String }
+  districtId: { ref: 'District', type: String, required: true }
 }, {
   timestamps: false,
   versionKey: false

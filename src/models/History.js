@@ -1,9 +1,9 @@
 const { Schema, model } = require('mongoose');
 
 const historySchema = new Schema({
-  variableId: { ref: 'Variable', type: String },
-  sensorId: { ref: 'Sensor', type: String },
-  value: Number
+  value: Number,
+  sensorId: { ref: 'Sensor', type: String, required: true },
+  variableId: { ref: 'Variable', type: String, required: true }
 }, {
   timestamps: true,
   versionKey: false
