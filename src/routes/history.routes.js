@@ -1,10 +1,10 @@
 const { Router } = require('express');
-const historiesController = require('../controllers/histories.controller');
+const historyController = require('../controllers/history.controller');
 
 const router = Router();
 
-router.post('/', historiesController.createhistory);    
-router.get('/', historiesController.getHistories);
+router.post('/', historyController.createhistory);    
+router.get('/', historyController.getHistory);
 //router.get('/:historyId', historiesController.getHistoriesById);
 //router.put('/:sensorId', sensorsController.updateSensorById);
 //router.delete('/:sensorId', sensorsController.deleteSensorById);

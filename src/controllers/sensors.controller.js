@@ -1,18 +1,17 @@
-const District = require('../models/District');
 const Sensor = require('../models/Sensor');
 const ctrl = {};
 
 ctrl.createSensor = async (req, res) => {
-    try {
-      const { _id, name, location, coordX, coordY, districtId } = req.body;
-      const newSensor = new Sensor({ _id, name, location, coordX, coordY, districtId });
-      const sensorCreated = await newSensor.save();
-      res.status(201).json(sensorCreated);
-    } catch (error) {
-      res.status(404).json({
-        message: error.name
-      });
-    }
+  try {
+    const { _id, name, location, coordX, coordY, districtId } = req.body;
+    const newSensor = new Sensor({ _id, name, location, coordX, coordY, districtId });
+    const sensorCreated = await newSensor.save();
+    res.status(201).json(sensorCreated);
+  } catch (error) {
+    res.status(404).json({
+      message: error.name
+    });
+  }
 }
 
 ctrl.getSensors = async (req, res) => {
@@ -20,18 +19,13 @@ ctrl.getSensors = async (req, res) => {
 	res.status(200).json(sensors);
 }
 
-ctrl.getSensorsById = async (req, res) => {
+ctrl.getSensorById = async (req, res) => {
   const sensor = await Sensor.findById(req.params.sensorId);
   res.status(200).json(sensor);
 }
 
-
 ctrl.updateSensorById = async (req, res) => {
   try {
-    if (req.body.districtId) {
-      const district = await District.findById(req.body.districtId);
-      if (!district) return res.status(404).json({ message: "districtId does not exit" });
-    }
     const sensorUpdated = await Sensor.findByIdAndUpdate(req.params.sensorId, req.body, {
       new: true
     });
@@ -54,8 +48,4 @@ ctrl.deleteSensorById = async (req, res) => {
   }
 }
 
-
-
-
 module.exports = ctrl;
-

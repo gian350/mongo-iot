@@ -5,7 +5,7 @@ const historySchema = new Schema({
   sensorId: { ref: 'Sensor', type: String },
   value: Number
 }, {
-  timestamps: false,
+  timestamps: true,
   versionKey: false
 });
 

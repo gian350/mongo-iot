@@ -3,8 +3,8 @@ const ctrl = {};
 
 ctrl.createDistrict = async (req, res) => {
   try {
-    const { _id, name, province, department } = req.body;
-    const newDistrict = new District({ _id, name, province, department });
+    const { _id, name, city, region } = req.body;
+    const newDistrict = new District({ _id, name, city, region });
     const districtCreated = await newDistrict.save();
     res.status(201).json(districtCreated);
   } catch (error) {

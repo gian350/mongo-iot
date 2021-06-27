@@ -3,8 +3,8 @@ const { Schema, model } = require('mongoose');
 const districtSchema = new Schema({
   _id: String,
   name: String,
-  province: String,
-  department: String
+  city: String,
+  region: String
 }, {
   timestamps: false,
   versionKey: false
