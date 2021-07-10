@@ -50,9 +50,9 @@ ctrl.deleteUserById = async (req, res) => {
 
 ctrl.signIn = async (req, res) => {
   const userFound = await User.findOne({ email: req.body.email });
-  if (!userFound) return res.status(400).json({ message: 'incorrect email', token: '0' });
+  if (!userFound) return res.status(200).json({ message: 'incorrect email', token: '0' });
   const matchPassword = await User.comparePassword(req.body.password, userFound.password);
-  if (!matchPassword) return res.status(401).json({ message: 'incorrect password', token: '2' });
+  if (!matchPassword) return res.status(200).json({ message: 'incorrect password', token: '2' });
   res.status(200).json({ message: 'correct email and password', token: '1', userId: userFound._id });
 }
 
