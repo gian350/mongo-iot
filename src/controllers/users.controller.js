@@ -3,8 +3,8 @@ const ctrl = {};
 
 ctrl.createUser = async (req, res) => {
   try {
-    const { _id, name, surname, password, email, districtId } = req.body;
-    const newUser = new User({ _id, name, surname, password: await User.encryptPassword(password), email, districtId });
+    const { _id, name, surname, password, email, photo, districtId } = req.body;
+    const newUser = new User({ _id, name, surname, password: await User.encryptPassword(password), email, photo, districtId });
     const userCreated = await newUser.save();
     res.status(201).json(userCreated);
   } catch (error) {
