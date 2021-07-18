@@ -22,7 +22,7 @@ ctrl.createhistory = async (req, res) => {
       const newMeasurement = new Measurement({ value, sensorId, variableId, date });
       await newMeasurement.save();
     } else {
-      await Measurement.updateOne({ _id: measurement._id }, { value });
+      await Measurement.updateOne({ _id: measurement._id }, { value, date });
     }
     res.status(201).json(historyCreated);
   } catch (error) {
