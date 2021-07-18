@@ -42,4 +42,9 @@ ctrl.getHistoryById = async (req, res) => {
   res.status(200).json(history);
 }
 
+ctrl.getHistoryBySensor = async (req, res) => {
+  const sensors = await History.find({ sensorId: req.params.sensorId });
+  res.status(200).json(sensors);
+} 
+
 module.exports = ctrl;

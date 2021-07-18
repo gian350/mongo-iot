@@ -8,5 +8,6 @@ router.get('/', historyController.getHistory);
 //router.get('/:historyId', historiesController.getHistoriesById);
 //router.put('/:sensorId', sensorsController.updateSensorById);
 //router.delete('/:sensorId', sensorsController.deleteSensorById);
+router.get('/sensor/:sensorId', historyController.getHistoryBySensor);
 
 module.exports = router;
