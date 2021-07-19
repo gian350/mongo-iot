@@ -11,4 +11,9 @@ ctrl.getMeasurementById = async (req, res) => {
   res.status(200).json(measurement);
 }
 
+ctrl.getMeasurementBySensor = async (req, res) => {
+  const measurement = await Measurement.find({ sensorId: req.params.sensorId });
+  res.status(200).json(measurement);
+}
+
 module.exports = ctrl;
